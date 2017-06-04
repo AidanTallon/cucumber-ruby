@@ -24,8 +24,10 @@ module Cucumber
           @rb_language.register_rb_transform(regexp, proc)
         end
 
-        def register_rb_step_definition(regexp, proc_or_sym, options = {})
-          @rb_language.register_rb_step_definition(regexp, proc_or_sym, options)
+        def register_rb_step_definition(regexp, proc_or_sym, options = {}, with)
+          require 'pry'
+          binding.pry
+          @rb_language.register_rb_step_definition(regexp, proc_or_sym, options, with)
         end
       end
 
@@ -115,9 +117,14 @@ module Cucumber
       #
       # If no +symbol+ if provided then the +&proc+ gets executed in
       # the context of the <tt>World</tt> object.
-      def register_rb_step_definition(regexp, symbol = nil, options = {}, &proc)
+      def register_rb_step_definition(regexp, symbol = nil, options = {}, with: nil, &proc)
+        require 'pry'
+        binding.pry
         proc_or_sym = symbol || proc
-        RbDsl.register_rb_step_definition(regexp, proc_or_sym, options)
+        unless with.nil?
+          regexp, with = with, regexp
+        end
+        RbDsl.register_rb_step_definition(regexp, proc_or_sym, options, with)
       end
     end
   end

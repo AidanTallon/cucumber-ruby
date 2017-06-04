@@ -70,8 +70,8 @@ module Cucumber
         end
       end
 
-      def initialize(rb_language, regexp, proc)
-        @rb_language, @regexp, @proc = rb_language, regexp, proc
+      def initialize(rb_language, regexp, proc, with)
+        @rb_language, @regexp, @proc, @with = rb_language, regexp, proc, with
         @rb_language.available_step_definition(regexp_source, location)
       end
 

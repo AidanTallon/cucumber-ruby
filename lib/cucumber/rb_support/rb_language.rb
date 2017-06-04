@@ -79,8 +79,10 @@ module Cucumber
         add_transform(RbTransform.new(self, regexp, proc))
       end
 
-      def register_rb_step_definition(regexp, proc_or_sym, options)
-        step_definition = RbStepDefinition.new(self, regexp, proc_or_sym, options)
+      def register_rb_step_definition(regexp, proc_or_sym, options, with)
+        require 'pry'
+        binding.pry
+        step_definition = RbStepDefinition.new(self, regexp, proc_or_sym, options, with)
         @step_definitions << step_definition
         @configuration.notify :step_definition_registered, step_definition
         step_definition
